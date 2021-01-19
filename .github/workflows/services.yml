@@ -15,10 +15,15 @@ jobs:
           - "27017:27017"
    steps:
      - name: Post a User
-       run: "curl -X POST http://localhost:3001/api/users
-       -H 'Content-Type:application/json' -d '
-       {\"username\":\"eliarms\",\"address\":\"eliarms\"}'"
-
+       run: "curl -v -H 'Content-type:application/json' -X POST -d '{\"username\":\"eliarms\",\"address\":\"eliarms\"}' http://localhost:3001/api/users "
+    
      - name: Get Users
        run: curl  http://localhost:3001/api/users
+
+     - name: Send a Slack Message
+       uses: docker://technosophos/slack-notify
+       env:
+         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK}}
+         SLACK_MESSAGE: "Hello Emmanuel"
+
       
