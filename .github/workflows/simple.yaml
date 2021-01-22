@@ -9,11 +9,11 @@ jobs:
       - name: echo a string
         run: echo "Hello Emmanuel"
       - name: multiline script
-        run : |
+        run: |
           node -v
-          npm -v   
+          npm -v
       - name: python command
-        run: | 
+        run: |
           import platform
           print(platform.processor())
         shell: python
@@ -27,4 +27,4 @@ jobs:
         run: Get-location
       - name: Directory bash
         run: pwd
-        shell: bash          
+        shell: bash
