@@ -3,31 +3,29 @@ on:
   push:
     # Sequence of patterns matched against refs/heads
     branches-ignore:
-      - '**'
+      - "**"
 
 jobs:
   node-docker:
-   runs-on: ubuntu-latest
-   services:
-     app:
-       image: eliarms/nodejs-api
-       ports:
+    runs-on: ubuntu-latest
+    services:
+      app:
+        image: eliarms/nodejs-api
+        ports:
           - 3001:3000
-     mongo:
+      mongo:
         image: mongo
         ports:
           - "27017:27017"
-   steps:
-     - name: Post a User
-       run: "curl -v -H 'Content-type:application/json' -X POST -d '{\"username\":\"eliarms\",\"address\":\"eliarms\"}' http://localhost:3001/api/users "
-    
-     - name: Get Users
-       run: curl  http://localhost:3001/api/users
+    steps:
+      - name: Post a User
+        run: 'curl -v -H ''Content-type:application/json'' -X POST -d ''{"username":"eliarms","address":"eliarms"}'' http://localhost:3001/api/users '
 
-     - name: Send a Slack Message
-       uses: docker://technosophos/slack-notify
-       env:
-         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK}}
-         SLACK_MESSAGE: "Hello Emmanuel"
+      - name: Get Users
+        run: curl  http://localhost:3001/api/users
 
-      
+      - name: Send a Slack Message
+        uses: docker://technosophos/slack-notify
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK}}
+          SLACK_MESSAGE: "Hello Emmanuel"
